@@ -11,8 +11,9 @@ public class FileReader {
         Profile profile = new Profile();
 
         BufferedReader reader = null;
+        FileInputStream inputStream = null;
         try {
-            FileInputStream inputStream = new FileInputStream(file);
+            inputStream = new FileInputStream(file);
             reader = new BufferedReader(new InputStreamReader(inputStream));
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -33,6 +34,14 @@ public class FileReader {
 
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } finally {
+            try {
+                if (inputStream != null){
+                    inputStream.close();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         return profile;
